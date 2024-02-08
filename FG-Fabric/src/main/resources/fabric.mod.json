@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Exordium",
-  "description": "Render the ingame gui on its own FPS limiter",
+  "description": "Render the InGame GUI on its own FPS Limiter",
   "authors": [
     "tr7zw"
   ],
@@ -29,9 +29,10 @@
   "mixins": [
     "exordium.mixins.json"
   ],
-  "accessWidener" : "exordium.accesswidener",
+
   "depends": {
+    "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": ">=1.19.4"
+    "minecraft": ">=1.20"
   }
 }

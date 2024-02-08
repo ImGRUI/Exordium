@@ -98,8 +98,6 @@ public class NametagScreenBuffer {
         bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).uv(1.0F, 1.0F).endVertex(); // 3
         bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 1.0F).endVertex(); // 4
         tesselator.end();
-//        RenderSystem.depthMask(true);
-//        RenderSystem.enableDepthTest();
 
     }
     

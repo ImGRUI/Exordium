@@ -1,5 +1,6 @@
 package dev.tr7zw.exordium.mixin;
 
+import net.minecraft.client.renderer.RenderType;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +31,7 @@ public class EntityRendererMixin {
     private Font font;
     
     /**
-     * Hooking into the render method to render the nametag. Redirects to the {@link NametagBufferHolder} class.
+     * Hooking into the render method to render the nametag. Redirects to the {@link NametagScreenBuffer} class.
      * 
      * @author tr7zw
      * @reason render nametags
@@ -65,14 +66,14 @@ public class EntityRendererMixin {
             ci.cancel();
         }
     }
-//    
-//    @Inject(method = "renderNameTag", at = @At("TAIL"), cancellable = true)
-//    protected void renderNameTagEnd(Entity arg, Component arg2, PoseStack poseStack, MultiBufferSource mbs, int k, CallbackInfo ci) {
-//        if(ExordiumModBase.instance.config.enableNametagScreenBuffering) {
-//            mbs.getBuffer(RenderType.endGateway()); // force clear the vertex consumer
-//            NametagScreenBuffer buffer = ExordiumModBase.instance.getNameTagScreenBuffer();
-//            buffer.bindEnd();
-//        }
-//    }
+    // Edit
+    @Inject(method = "renderNameTag", at = @At("TAIL"), cancellable = true)
+    protected void renderNameTagEnd(Entity entity, Component component, PoseStack tmpPoseStack, MultiBufferSource unusedBuffer, int i,  CallbackInfo ci) {
+        if(ExordiumModBase.instance.config.enableNametagScreenBuffering) {
+            unusedBuffer.getBuffer(RenderType.endGateway()); // force clear the vertex consumer
+            NametagScreenBuffer buffer = ExordiumModBase.instance.getNameTagScreenBuffer();
+            buffer.bindEnd();
+        }
+    }
     
 }
