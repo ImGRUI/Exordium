@@ -1,8 +1,0 @@
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.enableGui.tooltip Enable/Disable buffering the ingame gui/hud
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.enableGui Enabled Gui
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.enabledGuiAnimationSpeedup Speedup On Gui Animations
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.enabledGuiAnimationSpeedup.tooltip Enable/Disable speeding up during gui animations
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.enableSignBuffering.tooltip Enable/Disable buffering sign text
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.enableSignBuffering Sign Buffering
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.targetFPSNameTags Framerate Nametags
-[17:25:30] [Test worker/INFO]: [STDOUT]: text.exordium.targetFPSNameTags.tooltip The target framerate for nametags on the screen
