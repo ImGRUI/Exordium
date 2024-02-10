@@ -8,30 +8,29 @@ Renders the HUD at a lower fixed framerate (configurable in the settings), freei
 
 ## Compatibility
 
-__This is still work in progress software! There will be issues, please report them!__
+__Should work with any GUI. If there's issues, please report them!__
 
-### Affected vanilla features
+### Affected features
 
-- Overlays except Vignette (Pumpkin, freezing, spyglass, portal...)
-- Hotbar (all parts of it)
-- Crosshair
-- Bossbars
-- Debug Screen (F3 Menu)
-- Titles
-- Scoreboard
-- Chat
+- Any GUI
 
 ### Tested and working with
 
+- Axiom
+- Inventory HUD+
+- Action Bar Info
 - Sodium
 - Iris
 - Optifine
 - AppleSkin
 - Better Ping Display
 - Chat Heads
+- Chat Animation
 - Detail Armor Bar
 - WTHIT (What the hell is that?)
+- Held Item Info
 - JourneyMap
+- Xaero's Minimap
 - ToroHealth Damage Indicator
 - BetterF3
 
@@ -39,11 +38,7 @@ __This is still work in progress software! There will be issues, please report t
 
 - VulkanMod
 
-### Screen setting notice
-
-This feature is still not done (disabled by default) and has mainly transparency issues. It heavily speeds up mods like REI (Roughly Enough Items), but with visual issues.
-
-### Downloads
+### Original Mod Downloads
 - [Curseforge](https://www.curseforge.com/minecraft/mc-mods/exordium)
 - [Modrinth](https://modrinth.com/mod/exordium)
 
