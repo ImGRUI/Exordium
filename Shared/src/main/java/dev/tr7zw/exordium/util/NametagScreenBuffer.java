@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.GameRenderer;
 public class NametagScreenBuffer {
 
     private static final Minecraft minecraft = Minecraft.getInstance();
-    private RenderTarget guiTarget = new TextureTarget(100, 100, true, false);
+    private final RenderTarget guiTarget = new TextureTarget(100, 100, true, false);
     private boolean needsNewData = true;
     private int requestedNewData = 0;
     private long nextFrame = System.currentTimeMillis();
@@ -28,8 +28,7 @@ public class NametagScreenBuffer {
     
     /**
      * Prepares the buffer for a new frame if the old one is too old or the size changed.
-     * 
-     * @param cacheTime
+     *
      */
     private void reset(int cacheTime) {
         guiTarget.setClearColor(0, 0, 0, 0);
@@ -38,14 +37,13 @@ public class NametagScreenBuffer {
     }
     
     /**
-     * @return true if ready for rendering
+     *
      */
-    public boolean bind() {
+    public void bind() {
         reset(1000/ExordiumModBase.instance.config.targetFPSNameTags);
         guiTarget.bindWrite(false);
 
         ExordiumModBase.instance.setTemporaryScreenOverwrite(guiTarget);
-        return true;
     }
     
     public boolean acceptsData() {

@@ -16,11 +16,11 @@ public class BufferRenderer {
 
     private static final Minecraft minecraft = Minecraft.getInstance();
     private static Model model = null;
-    private RenderTarget guiTarget = new TextureTarget(100, 100, true, false);
+    private final RenderTarget guiTarget = new TextureTarget(100, 100, true, false);
     private long nextFrame = System.currentTimeMillis();
     private int guiScale = 0;
     private boolean isRendering = false;
-    private boolean forceBlending = false;
+    private final boolean forceBlending;
     
     public BufferRenderer() {
         this(false);
@@ -65,7 +65,7 @@ public class BufferRenderer {
             refreshModel(screenWidth, screenHeight);
         }
         if (!forceRender && System.currentTimeMillis() < nextFrame) {
-            renderTextureOverlay(guiTarget.getColorTextureId(), screenWidth, screenHeight);
+            renderTextureOverlay(guiTarget.getColorTextureId());
             return true;
         }
         guiTarget.setClearColor(0, 0, 0, 0);
@@ -93,12 +93,10 @@ public class BufferRenderer {
             ExordiumModBase.setBlendBypass(false);
             ExordiumModBase.setForceBlend(false);
         }
-        int screenWidth = minecraft.getWindow().getGuiScaledWidth();
-        int screenHeight = minecraft.getWindow().getGuiScaledHeight();
-        renderTextureOverlay(guiTarget.getColorTextureId(), screenWidth, screenHeight);
+        renderTextureOverlay(guiTarget.getColorTextureId());
     }
 
-    private void renderTextureOverlay(int textureid, int screenWidth, int screenHeight) {
+    private void renderTextureOverlay(int textureid) {
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();

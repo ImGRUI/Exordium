@@ -17,7 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(InventoryScreen.class)
 public class InventoryScreenMixin {
     @Inject(method = "render", at = @At("HEAD"))
-    private static void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
+    private void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
         ExordiumModBase.setBlendBypass(true);
     }
     // OLD

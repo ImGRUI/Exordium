@@ -16,7 +16,7 @@ public class GameRendererMixinHigh {
 
     @Shadow
     @Final
-    private Minecraft minecraft;
+    Minecraft minecraft;
 
     @Inject(method = "render(FJZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;renderWithTooltip(Lnet/minecraft/client/gui/GuiGraphics;IIF)V", shift = At.Shift.AFTER, ordinal = 0))
     public void renderScreenPost(float f, long l, boolean bl, CallbackInfo ci) {

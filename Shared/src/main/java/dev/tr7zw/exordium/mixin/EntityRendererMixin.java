@@ -3,6 +3,7 @@ package dev.tr7zw.exordium.mixin;
 import net.minecraft.client.renderer.RenderType;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,8 +26,10 @@ import net.minecraft.world.entity.Entity;
 @Mixin(value = EntityRenderer.class)
 public class EntityRendererMixin {
 
+    @Final
     @Shadow
     protected EntityRenderDispatcher entityRenderDispatcher;
+    @Final
     @Shadow
     private Font font;
     
@@ -36,10 +39,9 @@ public class EntityRendererMixin {
      * @author tr7zw
      * @reason render nametags
      */
-    @SuppressWarnings("resource")
     @Inject(method = "renderNameTag", at = @At("HEAD"), cancellable = true)
     protected void renderNameTag(Entity entity, Component component, PoseStack tmpPoseStack, MultiBufferSource unusedBuffer, int i, CallbackInfo ci) {
-        NametagScreenBuffer buffer = null;
+        NametagScreenBuffer buffer;
         ExordiumModBase inst = ExordiumModBase.instance;
         if(inst.config.enableNametagScreenBuffering) {
             buffer = inst.getNameTagScreenBuffer();
@@ -56,7 +58,7 @@ public class EntityRendererMixin {
                 // partial copy of the method to remove the "behind walls" part
                 MultiBufferSource.BufferSource bufferSource = MultiBufferSource
                         .immediate(Tesselator.getInstance().getBuilder());
-                float h = (-font.width(component) / 2);
+                float h = ((float) -font.width(component) / 2);
                 float g = (Minecraft.getInstance()).options.getBackgroundOpacity(0.25F);
                 int k = (int) (g * 255.0F) << 24;
                 font.drawInBatch(component, h, 0, -1, false, matrix4f, bufferSource, Font.DisplayMode.NORMAL, k, i);
@@ -67,7 +69,7 @@ public class EntityRendererMixin {
         }
     }
     // Edit
-    @Inject(method = "renderNameTag", at = @At("TAIL"), cancellable = true)
+    @Inject(method = "renderNameTag", at = @At("TAIL"))
     protected void renderNameTagEnd(Entity entity, Component component, PoseStack tmpPoseStack, MultiBufferSource unusedBuffer, int i,  CallbackInfo ci) {
         if(ExordiumModBase.instance.config.enableNametagScreenBuffering) {
             unusedBuffer.getBuffer(RenderType.endGateway()); // force clear the vertex consumer

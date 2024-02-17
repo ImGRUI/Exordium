@@ -15,7 +15,6 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -30,10 +29,10 @@ public class SignBufferRendererTest {
     private static final Cleaner cleaner = Cleaner.create();
     private static final Minecraft minecraft = Minecraft.getInstance();
     private static Model model = null;
-    private RenderTarget frontTexture;
-    private RenderTarget backtTexture;
+    private final RenderTarget frontTexture;
+    private final RenderTarget backtTexture;
 
-    public SignBufferRendererTest(SignBlockEntity arg, int light) {
+    public SignBufferRendererTest() {
         frontTexture = new TextureTarget((int) ExordiumModBase.signSettings.bufferWidth,
                 (int) ExordiumModBase.signSettings.bufferHeight, false, false);
         frontTexture.setClearColor(0, 0, 0, 0);
@@ -83,17 +82,8 @@ public class SignBufferRendererTest {
         model = new Model(modelData, uvData);
     }
 
-    Vec3 getTextOffset(float f) {
-        return new Vec3(0.0D, (0.5F * f), (0.07F * f));
-    }
 
-    public void render(PoseStack poseStack, int light, boolean hangingSign, boolean front) {
-//        poseStack.pushPose();
-//        float scale = hangingSign ? 1.0F : 0.6666667F;
-//        float g = 0.015625F * scale;
-//        Vec3 vec3 = getTextOffset(scale);
-//        poseStack.translate(vec3.x, vec3.y, vec3.z);
-//        poseStack.scale(g, -g, g);
+    public void render(PoseStack poseStack, boolean hangingSign, boolean front) {
         poseStack.translate(ExordiumModBase.signSettings.offsetX,
                 ExordiumModBase.signSettings.offsetY + (hangingSign ? ExordiumModBase.signSettings.hangingOffsetY : 0),
                 hangingSign ? ExordiumModBase.signSettings.hangingOffsetZ : 0);
@@ -107,8 +97,6 @@ public class SignBufferRendererTest {
         Matrix4f pose = poseStack.last().pose();
 
         model.draw(pose); // TODO: is light required here, since it's baked into the texture?
-
-//        poseStack.popPose();
     }
 
     private void renderSignToBuffer(SignText text, RenderTarget texture, int light) {
@@ -146,7 +134,7 @@ public class SignBufferRendererTest {
         }
         for (int p = 0; p < 4; p++) {
             FormattedCharSequence formattedCharSequence = formattedCharSequences[p];
-            float q = (-minecraft.font.width(formattedCharSequence) / 2);
+            float q = ((float) -minecraft.font.width(formattedCharSequence) / 2);
             if (bl) {
                 minecraft.font.drawInBatch8xOutline(formattedCharSequence, -28 + q, (p * 10 - 20), n, l, matrix4f,
                         bufferSource,
@@ -176,16 +164,14 @@ public class SignBufferRendererTest {
 
     static class State implements Runnable {
 
-        private RenderTarget cleanableRenderTarget;
+        private final RenderTarget cleanableRenderTarget;
 
         State(RenderTarget guiTarget) {
             this.cleanableRenderTarget = guiTarget;
         }
 
         public void run() {
-            RenderSystem.recordRenderCall(() -> {
-                cleanableRenderTarget.destroyBuffers();
-            });
+            RenderSystem.recordRenderCall(cleanableRenderTarget::destroyBuffers);
         }
     }
 

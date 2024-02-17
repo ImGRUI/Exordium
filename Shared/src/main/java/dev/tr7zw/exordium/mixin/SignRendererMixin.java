@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.entity.SignBlockEntity;
 
 @Mixin(SignRenderer.class)
 public abstract class SignRendererMixin {
+    @Unique
     private SignBlockEntity renderingSign;
 
     @Inject(method = "renderSignWithText", at = @At("HEAD"))
@@ -33,7 +35,7 @@ public abstract class SignRendererMixin {
     @Shadow
     abstract Vec3 getTextOffset();
     @Shadow
-    abstract void translateSignText(PoseStack poseStack, boolean isFrontText, Vec3 offset);
+    protected abstract void translateSignText(PoseStack poseStack, boolean isFrontText, Vec3 offset);
 
 
     @Inject(method = "renderSignText", at = @At("HEAD"), cancellable = true)
@@ -44,7 +46,7 @@ public abstract class SignRendererMixin {
         if(renderingSign == null) return;
         poseStack.pushPose(); // Is from new exordium
         translateSignText(poseStack, bl, getTextOffset()); // Is from new exordium
-        boolean cancel = ((SignBufferHolder) renderingSign).renderBuffered(poseStack, multiBufferSource, bl, i);
+        boolean cancel = ((SignBufferHolder) renderingSign).exordium$renderBuffered(poseStack, multiBufferSource, bl, i);
         poseStack.popPose();
         if (cancel) {
             info.cancel();

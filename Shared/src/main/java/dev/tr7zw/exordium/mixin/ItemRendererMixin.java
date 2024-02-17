@@ -23,7 +23,7 @@ public class ItemRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     public void render(ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
-        if(ExordiumModBase.isForceBlend() && (!ExordiumModBase.isBlendBypass() || ExordiumModBase.getBypassTurnoff() > 0)) {
+        if(ExordiumModBase.isForceBlend() && (ExordiumModBase.isBlendBypass() || ExordiumModBase.getBypassTurnoff() > 0)) {
             ExordiumModBase.setBlendBypass(true);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

@@ -4,8 +4,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.scores.Objective;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,12 +27,17 @@ import net.minecraft.util.Mth;
 
 @Mixin(value= Gui.class, priority = 1500) // higher priority, so it also captures rendering happening at RETURN
 public class GuiMixin{
+    @Unique
     private ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
+    @Unique
     private BufferRenderer bufferRenderer = new BufferRenderer();
+    @Unique
     private boolean reRenderCrosshair = false;
     
+    @Final
     @Shadow
     private Minecraft minecraft;
+    @Final
     @Shadow
     private ChatComponent chat;
     @Shadow
@@ -97,6 +104,7 @@ public class GuiMixin{
             }
             // Attack indicator
             if (this.minecraft.options.attackIndicator().get() == AttackIndicatorStatus.CROSSHAIR) {
+                assert this.minecraft.player != null;
                 float j = this.minecraft.player.getAttackStrengthScale(0.0F);
                 if(j < 1.0F) {
                     targetFps = ExordiumModBase.instance.config.targetFPSIngameGuiAnimated;
@@ -104,7 +112,7 @@ public class GuiMixin{
             }
             // Chat
             ChatAccess chatAccess = (ChatAccess) chat;
-            if(chatAccess.hasActiveAnimations(tickCount)) {
+            if(chatAccess.exordium$hasActiveAnimations(tickCount)) {
                 targetFps = ExordiumModBase.instance.config.targetFPSIngameGuiAnimated;
             }
             // Overlay message "Actionbar"

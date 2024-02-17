@@ -22,7 +22,7 @@ public abstract class GameRendererMixinLow {
 
     @Shadow
     @Final
-    private Minecraft minecraft;
+    Minecraft minecraft;
     
     @Inject(method = "render(FJZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;renderWithTooltip(Lnet/minecraft/client/gui/GuiGraphics;IIF)V", ordinal = 0), cancellable = true)
     public void renderScreenPre(float f, long l, boolean bl, CallbackInfo ci) { //net.minecraft.client.gui.GuiGraphics

@@ -36,14 +36,13 @@ public abstract class ExordiumModBase {
     private NametagScreenBuffer nametagScreenBuffer;
     private RenderTarget temporaryScreenOverwrite = null;
     public static SignSettings signSettings = new SignSettings();
-    public static NametagSettings nametagSettings = new NametagSettings();
     private final DelayedRenderCallManager delayedRenderCallManager = new DelayedRenderCallManager();
 
     public void onInitialize() {
 		instance = this;
         if (settingsFile.exists()) {
             try {
-                config = gson.fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
+                config = gson.fromJson(Files.readString(settingsFile.toPath(), StandardCharsets.UTF_8),
                         Config.class);
             } catch (Exception ex) {
                 System.out.println("Error while loading config! Creating a new one!");
@@ -65,7 +64,7 @@ public abstract class ExordiumModBase {
         if (settingsFile.exists())
             settingsFile.delete();
         try {
-            Files.write(settingsFile.toPath(), gson.toJson(config).getBytes(StandardCharsets.UTF_8));
+            Files.writeString(settingsFile.toPath(), gson.toJson(config));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -164,7 +163,7 @@ public abstract class ExordiumModBase {
     }
 
     public static boolean isBlendBypass() {
-        return blendBypass;
+        return !blendBypass;
     }
 
     public static void setBlendBypass(boolean blendBypass) {

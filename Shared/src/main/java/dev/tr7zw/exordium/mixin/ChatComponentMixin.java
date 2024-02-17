@@ -2,6 +2,7 @@ package dev.tr7zw.exordium.mixin;
 
 import java.util.List;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -12,13 +13,14 @@ import net.minecraft.client.gui.components.ChatComponent;
 @Mixin(ChatComponent.class)
 public abstract class ChatComponentMixin implements ChatAccess {
 
+    @Final
     @Shadow
     private List<GuiMessage.Line> trimmedMessages;
     @Shadow
     private int chatScrollbarPos;
     
     @Override
-    public boolean hasActiveAnimations(int i) {
+    public boolean exordium$hasActiveAnimations(int i) {
         if (isChatHidden())
             return false;
         if(isChatFocused())
@@ -37,10 +39,10 @@ public abstract class ChatComponentMixin implements ChatAccess {
     }
 
     @Shadow
-    public abstract boolean isChatFocused();
+    protected abstract boolean isChatFocused();
     
     @Shadow
-    public abstract boolean isChatHidden();
+    protected abstract boolean isChatHidden();
     
     @Shadow
     public abstract int getLinesPerPage();

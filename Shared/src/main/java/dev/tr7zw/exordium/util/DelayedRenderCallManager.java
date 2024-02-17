@@ -19,8 +19,8 @@ import dev.tr7zw.exordium.ExordiumModBase;
  */
 public class DelayedRenderCallManager {
 
-    private List<Runnable> renderCalls = new ArrayList<>();
-    private List<Runnable> nametagRenderCalls = new ArrayList<>();
+    private final List<Runnable> renderCalls = new ArrayList<>();
+    private final List<Runnable> nametagRenderCalls = new ArrayList<>();
     private Matrix4f usedProjectionMatrix = new Matrix4f();
     
     public void setProjectionMatrix(Matrix4f mat) {

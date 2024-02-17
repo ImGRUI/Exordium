@@ -26,7 +26,7 @@ public class GlStateManagerMixin {
         if(ExordiumModBase.getBypassTurnoff() > 1) {
             ExordiumModBase.setBypassTurnoff(ExordiumModBase.getBypassTurnoff()-1);
         }
-        if (ExordiumModBase.isForceBlend() && !ExordiumModBase.isBlendBypass()) {
+        if (ExordiumModBase.isForceBlend() && ExordiumModBase.isBlendBypass()) {
             ci.cancel();
         }
     }
@@ -41,7 +41,7 @@ public class GlStateManagerMixin {
         if(ExordiumModBase.getBypassTurnoff() > 1) {
             ExordiumModBase.setBypassTurnoff(ExordiumModBase.getBypassTurnoff()-1);
         }
-        if (ExordiumModBase.isForceBlend() && !ExordiumModBase.isBlendBypass()) {
+        if (ExordiumModBase.isForceBlend() && ExordiumModBase.isBlendBypass()) {
             ci.cancel();
         }
     }
